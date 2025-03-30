@@ -21,7 +21,10 @@
 /* Estilo de los elementos de la lista */
 .barra_inicio li {
   font-family: 'Arial', sans-serif; /* Fuente personalizada */
-  font-size: 16px;                  /* Tamaño del texto */
+  font-size: 16px;  
+  padding: 5px;
+  border-radius: 5px; 
+              /* Tamaño del texto */
 }
 
 /* Estilo de los enlaces */
@@ -33,8 +36,8 @@
 }
 
 /* Efecto hover en los enlaces */
-.barra_inicio a:hover {
-  color: #ffc107;          /* Cambia el color al pasar el mouse (amarillo) */
+.barra_inicio li:hover {
+  background-color: rgba(240, 248, 255, 0.233);
 }
 
 /* Responsive: ajusta el diseño en pantallas pequeñas */

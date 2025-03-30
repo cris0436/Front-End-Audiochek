@@ -1,12 +1,11 @@
 
 import { BrowserRouter, Link } from 'react-router-dom';
-const menuLogin = () => {
+const menuIncio = () => {
 
   return (
     <BrowserRouter>
       <nav className='barra_inicio'>
         <ul>
-          
           <li>
             <Link to="/">Inicio</Link> {/* Enlace a la página de inicio */}
           </li>
@@ -26,4 +25,4 @@ const menuLogin = () => {
   )
 }
 
-export default menuLogin
+export default menuIncio
