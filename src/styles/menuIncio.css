@@ -1,0 +1,49 @@
+/* Estilos principales para la barra de navegación */
+.barra_inicio {
+  background-color: #5384b6; /* Color de fondo oscuro */
+  padding: 10px 20px;       /* Espaciado interno */
+  display: flex;            /* Uso de flexbox */
+  justify-content: center;  /* Centra los elementos */
+  align-items: center;      /* Alinea verticalmente los elementos */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  width:100%;
+}
+
+/* Estilo de la lista */
+.barra_inicio ul {
+  list-style: none;         /* Elimina los puntos de la lista */
+  margin: 0;                /* Espaciado externo */
+  padding: 0;               /* Espaciado interno */
+  display: flex;            /* Coloca los elementos en línea */
+  gap: 20px;                /* Espaciado entre enlaces */
+}
+
+/* Estilo de los elementos de la lista */
+.barra_inicio li {
+  font-family: 'Arial', sans-serif; /* Fuente personalizada */
+  font-size: 16px;                  /* Tamaño del texto */
+}
+
+/* Estilo de los enlaces */
+.barra_inicio a {
+  text-decoration: none;   /* Elimina subrayado */
+  color: #ffffff;          /* Color del texto (blanco) */
+  font-weight: bold;       /* Hace el texto más destacado */
+  transition: color 0.3s ease; /* Suaviza el cambio de color al pasar el mouse */
+}
+
+/* Efecto hover en los enlaces */
+.barra_inicio a:hover {
+  color: #ffc107;          /* Cambia el color al pasar el mouse (amarillo) */
+}
+
+/* Responsive: ajusta el diseño en pantallas pequeñas */
+@media (max-width: 600px) {
+  .barra_inicio {
+    flex-direction: column; /* Coloca los elementos en una columna */
+  }
+
+  .barra_inicio ul {
+    gap: 10px;              /* Reduce el espacio entre enlaces */
+  }
+}

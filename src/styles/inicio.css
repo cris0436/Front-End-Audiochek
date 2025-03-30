@@ -1,0 +1,12 @@
+.inicio{
+    width: 100%;
+}
+.logoBiembenida{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.inicio .logo{
+    margin: 0;
+    width: 15%;
+}
