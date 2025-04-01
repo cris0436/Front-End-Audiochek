@@ -2,7 +2,7 @@ import MenuIncicio from '../components/menuIncio'
 import "../styles/menuIncio.css"
 import "../styles/inicio.css"
 import icon from "../assets/icon.png"
-export const inicio = () => {
+export const Inicio = () => {
   return (
       <div className='inicio'>
         <MenuIncicio/>
@@ -21,6 +21,6 @@ export const inicio = () => {
      
   )
 }
-export default inicio
+export default Inicio
 
 

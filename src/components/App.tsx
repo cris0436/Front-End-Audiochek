@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Inicio  from '../views/inicio'
+import Inicio  from '../views/viewInicio'
 import '../styles/App.css'
 
 function App() {
@@ -7,10 +7,7 @@ function App() {
 
   return (
     <>
-
       <Inicio/>
-
-      
     </>
   )
 }

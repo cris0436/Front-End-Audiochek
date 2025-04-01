@@ -1,6 +1,6 @@
 
 import { BrowserRouter, Link } from 'react-router-dom';
-const menuIncio = () => {
+const MenuIncio = () => {
 
   return (
     <BrowserRouter>
@@ -25,4 +25,4 @@ const menuIncio = () => {
   )
 }
 
-export default menuIncio
+export default MenuIncio
