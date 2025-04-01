@@ -1,22 +1,24 @@
 import React from 'react'
-import from '../vis'
-import { Route,Routes,Navigate} from 'react-router-dom';
+import { Inicio, Login, Register } from '../views';
 
-export default function RouteProtect() {
+import { Route,BrowserRouter as Router ,Routes } from 'react-router-dom';
+
+ function RouteProtect() {
     
         return (
-       
+            <Router>
                 <Routes>
 
-                    <Route path='/' element={<Navigate to="/home"/>} />
-                      
-                   {/* Redirigir '/' a '/home' */}
-                   <Route path="/*" element={<Navigate to="/home" />} />
+                    <Route path='/' element={<Inicio/>} />
+                    <Route path='/login' element={<Login/>} /> 
+                    <Route path="/sign up" element={<Register/>} />
+                  
+                  
                 </Routes>
-           
+            </Router>
                 
             
           )
     }
-    
+export default RouteProtect
   

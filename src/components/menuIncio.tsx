@@ -3,23 +3,22 @@ import { BrowserRouter, Link } from 'react-router-dom';
 const MenuIncio = () => {
 
   return (
-    <BrowserRouter>
+ 
       <nav className='barra_inicio'>
         <ul>
           <li>
-            <Link to="/">Inicio</Link> {/* Enlace a la página de inicio */}
+            <Link to="/">Inicio</Link> 
           </li>
           
           <li>
             <Link to="/login">Iniciar sesion</Link>
           </li>
           <li>
-            <Link to="/signup">Registrarte</Link> 
+            <Link to="/sign up">Registrarte</Link> 
           </li>
         </ul>
       </nav>
-      
-    </BrowserRouter>
+
     
     
   )
