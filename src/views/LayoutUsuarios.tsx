@@ -2,6 +2,8 @@ import React from "react";
 import MenuUsuarios from "../components/MenuUsuarios";
 import PruebaAudtiva from "../components/PruebaAuditiva"; // Corrección en el nombre
 import EditUserPage from "../components/EditUserPage";
+import ResultadosAudiometria from "../components/ResultadosAudiometria"
+import Recommendation from "../components/Recommendation";
 interface Props {
   com: string;
 }
@@ -9,7 +11,7 @@ interface Props {
 const LayoutUsuarios: React.FC<Props> = ({ com }) => {
   // Diccionario de componentes
   const componentes: Record<string, React.FC> = {
-    PruebaAudtiva,EditUserPage
+    PruebaAudtiva,EditUserPage,ResultadosAudiometria,Recommendation
   };
 
   // Validación de componente seleccionado

@@ -1,27 +1,29 @@
-
 import { BrowserRouter, Link } from 'react-router-dom';
+// Importa íconos de react-icons (ejemplo: FaHome, FaSignInAlt, FaUserPlus)
+import { FaHome, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
+
 export const MenuIncio = () => {
-
   return (
- 
-      <nav className='barra_inicio'>
-        <ul>
-          <li>
-            <Link to="/">Inicio</Link> 
-          </li>
-          
-          <li>
-            <Link to="/login">Iniciar sesion</Link>
-          </li>
-          <li>
-            <Link to="/sign up">Registrarte</Link> 
-          </li>
-        </ul>
-      </nav>
+    <nav className="barra_inicio">
+      <ul>
+        <li>
+          <Link to="/">
+            <FaHome /> Inicio
+          </Link>
+        </li>
+        <li>
+          <Link to="/login">
+            <FaSignInAlt /> Iniciar sesión
+          </Link>
+        </li>
+        <li>
+          <Link to="/sign up">
+            <FaUserPlus /> Registrarte
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  );
+};
 
-    
-    
-  )
-}
-
-export default MenuIncio
+export default MenuIncio;

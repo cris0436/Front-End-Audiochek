@@ -1,7 +1,7 @@
 import React from "react";
 import MenuInicio from "../components/MenuIncio";
-import LoginForm from "../components/LoginForm" // Corrección en el nombre
-import RegisterForm from "../components/RegisterForm"
+import LoginForm from "../components/loginForm" // Corrección en el nombre
+import RegisterForm from "../components/registerForm"
 interface Props {
   com: string;
 }
