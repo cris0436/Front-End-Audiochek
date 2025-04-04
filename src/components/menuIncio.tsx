@@ -1,6 +1,6 @@
 
 import { BrowserRouter, Link } from 'react-router-dom';
-const MenuIncio = () => {
+export const MenuIncio = () => {
 
   return (
  

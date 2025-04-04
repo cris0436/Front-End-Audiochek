@@ -1,3 +1,3 @@
-export { default as Inicio } from './viewInicio';
-export { default as Login } from './viewLogin';
-export { default as Register } from './viewRegistro';
+export { default as Inicio } from './ViewInicio';
+export { default as LayoutInicio} from './LayoutInicio'
+export { default as LayoutUsuarios} from './LayoutUsuarios'

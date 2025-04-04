@@ -1,47 +1,69 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
+
   username: string;
   password: string;
 };
 
 export function LoginForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
-
-  // Función para manejar los datos del formulario
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const navigate = useNavigate();
   const handleLoginData = (data: Inputs) => {
-    // Aquí puedes hacer la lógica con los datos, como enviarlos a un servidor
     console.log("Datos recibidos:", data);
-    // Por ejemplo, podrías hacer un fetch a tu API de login:
-    // fetch('/api/login', { method: 'POST', body: JSON.stringify(data) });
+    navigate("/audichek/datos-persona");
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    // Pasamos los datos a la función externa
     handleLoginData(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="text-xl mb-4">Iniciar Sesión</h2>
-      <input
-        {...register("username", { required: "El usuario es obligatorio" })}
-        placeholder="Usuario"
-        className="block w-full p-2 mb-2 border rounded"
-      />
-      {errors.username && <span className="text-red-500">{errors.username.message}</span>}
+    <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+      <div className="card shadow p-4 bg-white rounded" style={{ maxWidth: "400px", width: "100%" }}>
+        <h2 className="text-center mb-4" style={{ color: "#264e86" }}>Iniciar Sesión</h2>
 
-      <input
-        {...register("password", { required: "La contraseña es obligatoria" })}
-        type="password"
-        placeholder="Contraseña"
-        className="block w-full p-2 mb-4 border rounded"
-      />
-      {errors.password && <span className="text-red-500">{errors.password.message}</span>}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <label className="form-label">Usuario</label>
+            <input
+              type="text"
+              {...register("username", { required: "El usuario es obligatorio" })}
+              className={`form-control ${errors.username ? "is-invalid" : ""}`}
+              placeholder="Ingrese su usuario"
+            />
+            {errors.username && (
+              <div className="invalid-feedback">{errors.username.message}</div>
+            )}
+          </div>
 
-      <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Ingresar</button>
-    </form>
+          <div className="mb-4">
+            <label className="form-label">Contraseña</label>
+            <input
+              type="password"
+              {...register("password", { required: "La contraseña es obligatoria" })}
+              className={`form-control ${errors.password ? "is-invalid" : ""}`}
+              placeholder="Ingrese su contraseña"
+            />
+            {errors.password && (
+              <div className="invalid-feedback">{errors.password.message}</div>
+            )}
+          </div>
+
+          <button type="submit" className="btn btn-primary w-100">
+            Ingresar
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
+
+export default LoginForm;

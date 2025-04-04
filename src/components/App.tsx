@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import RouteProtect from './router'
-import Inicio from '../views/viewInicio'
+import RouteProtect from './Router.tsx'
+import Inicio from '../views/ViewInicio.tsx'
 import '../styles/App.css'
 
 function App() {
@@ -8,7 +8,11 @@ function App() {
 
   return (
     <>
+      <div>
       <RouteProtect/>
+      </div>
+      
+      
     </>
   )
 }

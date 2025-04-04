@@ -9,7 +9,7 @@ const user = {
   occupation: "Docente"
 };
 
-export default function EditUserPage() {
+ function EditUserPage() {
   const handleUpdate = () => {
     console.log("Datos actualizados:", );
     // Aquí podrías enviar los datos a tu backend
@@ -17,3 +17,4 @@ export default function EditUserPage() {
 
   return <UpdateUserForm userData={user} onUpdate={handleUpdate} />;
 }
+export default EditUserPage;
