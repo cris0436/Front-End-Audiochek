@@ -1,5 +1,5 @@
 import React from "react";
-import MenuInicio from "../components/MenuIncio";
+import MenuInicio from "../components/menuIncio"
 import LoginForm from "../components/loginForm" // Corrección en el nombre
 import RegisterForm from "../components/registerForm"
 interface Props {
