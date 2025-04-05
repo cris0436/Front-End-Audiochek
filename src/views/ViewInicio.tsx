@@ -1,4 +1,4 @@
-import MenuIncicio from '../components/menuIncio';
+import MenuIncicio from '../components/MenuIncio';
 import { Link } from 'react-router-dom';
 import icon from '../assets/icon.png';
 
