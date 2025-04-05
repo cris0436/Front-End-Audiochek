@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import RouteProtect from '../components/router'
+import RouteProtect from '../components/Router'
 import '../styles/App.css'
 
 function App() {
