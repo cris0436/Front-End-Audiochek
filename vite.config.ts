@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0',
-    allowedHosts: ['audicheck.cogra.com.co'],
+    allowedHosts: ['app.cogra.com.co'],
   }
 })
