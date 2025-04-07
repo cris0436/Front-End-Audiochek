@@ -3,11 +3,20 @@ import DemostrarAudimetriaCorta from './DemostrarAudimetriaCorta'
 import DemostrarAudimetriaLarga from './DemostrarAudimetriaLarga'
 const ResultadosAudiometria = () => {
   return (
-    <>
-    <DemostrarAudimetriaCorta/>
-    <DemostrarAudimetriaLarga/>
-    </>
     
+    <div className="container">
+      <div className="row">
+        {/* Columna para audimetría corta */}
+        <div className="col-12 col-md-6">
+          <DemostrarAudimetriaCorta />
+        </div>
+        
+        {/* Columna para audimetría larga */}
+        <div className="col-12 col-md-6">
+          <DemostrarAudimetriaLarga />
+        </div>
+      </div>
+    </div>
   )
 }
 
