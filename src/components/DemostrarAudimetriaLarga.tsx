@@ -48,7 +48,7 @@ const DemostrarAudimetriaLarga = () => {
       <div className="card shadow-lg rounded-4 border-0" style={{ width: "100%", maxWidth: "650px" }}>
         <div className="card-body text-center">
           <h2 className="card-title mb-4 text-primary fw-bold">
-            🎧 Resultados Audimetría Larga
+            🎧 Resultados Audimetría (oido derecho y izqueido)
           </h2>
 
           {/* Si no hay datos, mostramos un mensaje */}

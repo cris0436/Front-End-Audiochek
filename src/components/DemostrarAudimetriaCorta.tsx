@@ -46,7 +46,7 @@ const DemostrarAudimetriaCorta = () => {
       <div className="card shadow-lg rounded-4 border-0">
         <div className="card-body">
           <h2 className="card-title text-center mb-4 text-primary fw-bold">
-            🎧 Resultados Audimetría Corta
+            🎧 Resultados Audimetría (General)
           </h2>
 
           {/* Si no hay datos, mostramos un mensaje */}
