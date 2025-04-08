@@ -1,54 +1,56 @@
 import React, { useRef, useEffect, useState } from "react";
 
-interface Props {
-  vol: number; // Volumen entre 0 y 1
-  frecuencia: string; // URL o archivo de audio
+interface TestAuditivoProps {
+  vol: number;
+  frecuencia: string;
+  canal: "izquierda" | "derecha";
 }
 
-export const TestAuditivo: React.FC<Props> = ({ vol, frecuencia }) => {
+const TestAuditivo: React.FC<TestAuditivoProps> = ({ vol, frecuencia, canal }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [timeLeft, setTimeLeft] = useState<number>(0);  // Estado para el tiempo restante
+  const [duration, setDuration] = useState<number>(0);  // Estado para la duración total del audio
+  const [progress, setProgress] = useState<number>(0);  // Estado para la barra de progreso
 
   useEffect(() => {
+    // Inicializar el audio cuando cambian las propiedades de vol, frecuencia, o canal
     if (audioRef.current) {
-      audioRef.current.volume = vol;
-      audioRef.current.currentTime = 0; // Reiniciar audio al cambiar de frecuencia
-      audioRef.current.play();
-
-      audioRef.current.onloadedmetadata = () => {
-        setDuration(audioRef.current?.duration || 0);
-      };
-
-      audioRef.current.ontimeupdate = () => {
-        setCurrentTime(audioRef.current?.currentTime || 0);
-      };
+      audioRef.current.pause();  // Pausar cualquier audio en reproducción
+      audioRef.current.load();  // Recargar el nuevo audio
+      audioRef.current.volume = vol;  // Establecer el volumen
+      audioRef.current.play();  // Reproducir el nuevo audio
     }
-  }, [vol, frecuencia]); // Se actualiza si el volumen o frecuencia cambia
+  }, [vol, frecuencia, canal]);
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      const currentTime = audioRef.current.currentTime;  // Tiempo actual de reproducción
+      const totalDuration = audioRef.current.duration;  // Duración total del audio
+      setTimeLeft(totalDuration - currentTime);  // Calcular el tiempo restante
+      setProgress((currentTime / totalDuration) * 100);  // Calcular el progreso en porcentaje
+    }
+  };
 
   return (
-    <div className="card shadow-sm p-3 rounded" style={{ background: "#f8f9fa", color: "#000" }}>
-      <h4 className="text-center">Prueba Auditiva</h4>
-      <p className="text-center"> </p>
-      {/* Barra de sonido */}
-      <audio ref={audioRef}  autoPlay loop src={frecuencia} />
-
-      <div className="mt-3">
-        <label style={{ color: "#000" }}>⏳ Progreso:</label>
-        <progress className="w-100" value={currentTime} max={duration}></progress>
-        <p className="text-center mt-2">
-          {currentTime.toFixed(2)}s / {duration.toFixed(2)}s
-        </p>
-      </div>
-
-      {/* Botones estilizados */}
-      <div className="d-flex justify-content-center mt-3">
-        <button className="btn-primary text-white "  onClick={() => audioRef.current?.play()}>
-          ▶️ Reproducir
-        </button>
-        <button className="btn-primary text-white" onClick={() => audioRef.current?.pause()}>
-          ⏸️ Pausar
-        </button>
+    <div>
+      <audio
+        ref={audioRef}
+        src={frecuencia}
+        preload="auto"
+        loop
+        onTimeUpdate={handleTimeUpdate}  // Actualizar el tiempo restante y el progreso
+      />
+      <div className="progress mt-3">
+        <div
+          className="progress-bar"
+          role="progressbar"
+          style={{ width: `${progress}%` }}
+          aria-valuenow={progress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          {Math.round(timeLeft)}s restantes
+        </div>
       </div>
     </div>
   );
