@@ -17,7 +17,7 @@ export const MenuIncio = () => {
           </Link>
         </li>
         <li>
-          <Link to="/sign up">
+          <Link to="/sign-up">
             <FaUserPlus /> Registrarte
           </Link>
         </li>

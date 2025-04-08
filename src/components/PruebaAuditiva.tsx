@@ -2,14 +2,15 @@ import { useState } from "react";
 import audios from "../assets/audios";
 import TestAuditivo from "./TestAuditivo";
 import { Navigate, useNavigate, } from "react-router-dom";
-
+import React from "react";
 
 export const PruebaAuditiva: React.FC = () => {
   const FRECUENCIAS = [
     audios.sound8, audios.sound10, audios.sound12, audios.sound15, audios.sound16,
     audios.sound17, audios.sound18, audios.sound19, audios.sound20,
   ];
-  const VOL = [0.005, 0.001, 0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+  //               10db           20db         30db       40db        50db         60db        70db      80db      90db
+  const VOL = [0.0000894335192,0.00028281 ,0.000894335, 0.00282813, 0.00894335, 0.02828136, 0.089433519, 0.28283, 0.8943];
   const navigate = useNavigate();
 
   const [indexFrecuencias, setIndexFrecuencias] = useState(0);

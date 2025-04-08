@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 type Inputs = {
@@ -9,6 +9,7 @@ type Inputs = {
   birthdate: string;
   gender: string;
   occupation: string;
+  acceptPolicy: boolean;
 };
 
 const occupations = [
@@ -20,8 +21,9 @@ const occupations = [
 ];
 
 export function RegisterForm() {
-  const {register,handleSubmit, formState: { errors },} = useForm<Inputs>();
+  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
   const navigate = useNavigate();
+
   const handleRegisterData = (data: Inputs) => {
     console.log("Datos recibidos:", data);
     navigate("/audichek/recomendaciones");
@@ -38,6 +40,10 @@ export function RegisterForm() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
 
+          {/* Campos existentes */}
+          {/* ... username, email, birthdate, gender, occupation ... */}
+
+          {/* Usuario */}
           <div className="mb-3">
             <label className="form-label">Usuario</label>
             <input
@@ -45,11 +51,10 @@ export function RegisterForm() {
               className={`form-control ${errors.username ? "is-invalid" : ""}`}
               placeholder="Ingrese su usuario"
             />
-            {errors.username && (
-              <div className="invalid-feedback">{errors.username.message}</div>
-            )}
+            {errors.username && <div className="invalid-feedback">{errors.username.message}</div>}
           </div>
 
+          {/* Email */}
           <div className="mb-3">
             <label className="form-label">Correo electrónico</label>
             <input
@@ -64,11 +69,10 @@ export function RegisterForm() {
               className={`form-control ${errors.email ? "is-invalid" : ""}`}
               placeholder="correo@ejemplo.com"
             />
-            {errors.email && (
-              <div className="invalid-feedback">{errors.email.message}</div>
-            )}
+            {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
           </div>
 
+          {/* Fecha de nacimiento */}
           <div className="mb-3">
             <label className="form-label">Fecha de nacimiento</label>
             <input
@@ -76,11 +80,10 @@ export function RegisterForm() {
               type="date"
               className={`form-control ${errors.birthdate ? "is-invalid" : ""}`}
             />
-            {errors.birthdate && (
-              <div className="invalid-feedback">{errors.birthdate.message}</div>
-            )}
+            {errors.birthdate && <div className="invalid-feedback">{errors.birthdate.message}</div>}
           </div>
 
+          {/* Género */}
           <div className="mb-3">
             <label className="form-label">Género</label>
             <select
@@ -92,11 +95,10 @@ export function RegisterForm() {
               <option value="Femenino">Femenino</option>
               <option value="Otro">Otro</option>
             </select>
-            {errors.gender && (
-              <div className="invalid-feedback">{errors.gender.message}</div>
-            )}
+            {errors.gender && <div className="invalid-feedback">{errors.gender.message}</div>}
           </div>
 
+          {/* Ocupación */}
           <div className="mb-4">
             <label className="form-label">Ocupación</label>
             <select
@@ -108,9 +110,38 @@ export function RegisterForm() {
                 <option key={index} value={occ}>{occ}</option>
               ))}
             </select>
-            {errors.occupation && (
-              <div className="invalid-feedback">{errors.occupation.message}</div>
-            )}
+            {errors.occupation && <div className="invalid-feedback">{errors.occupation.message}</div>}
+          </div>
+
+          {/* Tratamiento de datos */}
+          <div className="mb-3">
+            <details className="mb-2">
+              <summary className="text-primary" style={{ cursor: "pointer" }}>
+                Tratamiento de Datos Personales
+              </summary>
+              <div className="mt-2 text-secondary" style={{ fontSize: "0.9rem", maxHeight: "200px", overflowY: "auto" }}>
+                <p>En el desarrollo del proyecto AudiCheck, se reconoce la importancia de la protección de los datos personales de los usuarios. Por ello, se ha adoptado un enfoque responsable, ético y conforme a lo establecido en la Ley Estatutaria 1581 de 2012 y el Decreto 1377 de 2013, que regulan el tratamiento de datos personales en Colombia. El proyecto se guía por los principios de legalidad, finalidad, libertad, veracidad o calidad, transparencia, acceso y circulación restringida, seguridad y confidencialidad.</p>
+                <p>Los datos recolectados a través de la aplicación, tales como nombre, correo electrónico, fecha de nacimiento, género y ocupación, son utilizados exclusivamente con fines académicos y de investigación en el marco del análisis auditivo propuesto. Esta información es almacenada de forma segura en una base de datos protegida, y su tratamiento se limita estrictamente a los fines previamente informados al usuario, garantizando en todo momento su confidencialidad, integridad y disponibilidad.</p>
+                <p>Para proteger los datos personales durante su transmisión, se implementa el uso de protocolos de encriptación como SSL/TLS. Asimismo, se han establecido mecanismos de seguridad en el almacenamiento, restringiendo el acceso únicamente a los miembros autorizados del equipo de desarrollo del proyecto, conforme al principio de seguridad.</p>
+                <p>De acuerdo con el principio de autorización previa e informada, los usuarios son informados de manera clara sobre el tipo de datos que serán recolectados, la finalidad de su uso, y sus derechos como titulares, tales como el acceso, corrección, supresión, revocatoria de la autorización y oposición al tratamiento de sus datos. En ningún caso se compartirán los datos personales con terceros sin el consentimiento expreso del titular.</p>
+                <p>Este tratamiento se ajusta no solo a la legislación colombiana vigente, sino también a las mejores prácticas internacionales en materia de protección de datos personales en entornos digitales.</p>
+              </div>
+            </details>
+
+            <div className="form-check">
+              <input
+                type="checkbox"
+                className={`form-check-input ${errors.acceptPolicy ? "is-invalid" : ""}`}
+                id="acceptPolicy"
+                {...register("acceptPolicy", { required: "Debe aceptar las políticas de tratamiento de datos" })}
+              />
+              <label className="form-check-label" htmlFor="acceptPolicy">
+                Acepto las políticas de tratamiento de datos personales
+              </label>
+              {errors.acceptPolicy && (
+                <div className="invalid-feedback d-block">{errors.acceptPolicy.message}</div>
+              )}
+            </div>
           </div>
 
           <button type="submit" className="btn btn-primary w-100">
@@ -121,4 +152,5 @@ export function RegisterForm() {
     </div>
   );
 }
-export default RegisterForm
+
+export default RegisterForm;
