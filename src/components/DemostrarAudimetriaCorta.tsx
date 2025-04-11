@@ -76,10 +76,10 @@ const DemostrarAudimetriaCorta = () => {
           )}
 
           {/* Estado auditivo en recuadro Bootstrap moderno */}
-          <div className="d-flex justify-content-center mt-5">
+                  <div className="mt-5 d-flex justify-content-center">
             <div
-              className="bg-white border-start border-5 border-primary rounded-3 p-4 shadow text-center"
-              style={{ minWidth: "280px" }}
+              className="bg-white border border-primary rounded-4 p-4 shadow text-center w-100"
+              style={{ maxWidth: "300px" }}
             >
               <p className="mb-1 text-muted">Estado auditivo</p>
               <h3 className="fw-bold text-primary mb-0">{estadoAuditivo}</h3>
