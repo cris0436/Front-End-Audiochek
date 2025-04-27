@@ -1,8 +1,6 @@
 
-import { Inicio, LayoutUsuarios, LayoutInicio} from '../views';
+import { Inicio, LayoutUsuarios, LayoutInicio} from '../page';
 import { Route,BrowserRouter as Router ,Routes ,Navigate} from 'react-router-dom';
-
-import audios from '../assets/audios';
 import React from 'react';
 
 function RouteProtect() {

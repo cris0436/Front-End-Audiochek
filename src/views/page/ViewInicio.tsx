@@ -1,7 +1,8 @@
 import MenuIncicio from '../components/MenuIncio';
 import { Link } from 'react-router-dom';
-import icon from '../assets/icon.png';
+import icon from '../../assets/icon.png';
 
+import React from 'react';
 export const Inicio = () => {
   return (
     <div className="inicio bg-light min-vh-100">

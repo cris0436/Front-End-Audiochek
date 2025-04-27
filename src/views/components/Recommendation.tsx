@@ -2,9 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 // Importación de imágenes
-import lugarSilencioso from '../assets/lugar_silencioso.png';
-import usoAudifonos from '../assets/uso_audifonos.png';
-import volMax from '../assets/vol_max.png';
+import lugarSilencioso from '../../assets/lugar_silencioso.png';
+import usoAudifonos from '../../assets/uso_audifonos.png';
+import volMax from '../../assets/vol_max.png';
 
 const Recommendation: React.FC = () => {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import React from "react";
-import { UpdateUserForm } from "./UpdateUserForm.tsx";
+import { UpdateUserForm } from "../../viewmodels/UpdateUserForm.tsx";
 
 const user = {
   username: "Maria123",

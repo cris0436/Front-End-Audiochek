@@ -3,12 +3,20 @@ class Usuario {
     private _contrasena: string;
     private _ocupacion: string;
     private _fechaNacimiento: Date;
-  
-    constructor(userName: string, contrasena: string, ocupacion: string, fechaNacimiento: Date) {
+    
+    constructor(userName: string, contrasena: string | undefined, ocupacion: string, fechaNacimiento: Date) {
+      if (typeof contrasena === "undefined") {
+      // Caso en el que no se proporciona contraseña
+      this._userName = userName;
+      this._ocupacion = ocupacion;
+      this.fechaNacimiento = fechaNacimiento; 
+      } else {
+      // Caso en el que se proporciona contraseña
       this._userName = userName;
       this._contrasena = contrasena;
       this._ocupacion = ocupacion;
-      this.fechaNacimiento = fechaNacimiento; // Uso del setter para validar la fecha
+      this.fechaNacimiento = fechaNacimiento; 
+      }
     }
   
     // Getter para el nombre de usuario
@@ -56,4 +64,5 @@ class Usuario {
       }
     }
   }
+  export default Usuario;
   
