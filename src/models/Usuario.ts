@@ -1,13 +1,20 @@
 class Usuario {
+    
     private _userName: string;
     private _email: string;
     private _contrasena: string;
     private _ocupacion: string;
     private _fechaNacimiento: Date;
-    email: string;
-    genero: string;
+    private email: string;
+    private genero: string;
+    private password: any;
     
-    
+    getPassword() {
+       return this._contrasena;
+    }
+    getEmail() {
+      return this._email;
+    }
     constructor(
 
       userName: string, 
