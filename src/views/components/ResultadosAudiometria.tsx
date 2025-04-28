@@ -1,6 +1,6 @@
 import React from 'react'
-import DemostrarAudimetriaCorta from './DemostrarAudimetriaCorta'
-import DemostrarAudimetriaLarga from './DemostrarAudimetriaLarga'
+import DemostrarAudimetriaCorta from '../../viewmodels/DemostrarAudimetriaCorta'
+import DemostrarAudimetriaLarga from '../../viewmodels/DemostrarAudimetriaLarga'
 const ResultadosAudiometria = () => {
   return (
     

@@ -1,6 +1,8 @@
+// src/views/RegisterForm.tsx
+
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useRegisterVM } from "../../viewmodels/useRegisterVM";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 type Inputs = {
@@ -22,26 +24,18 @@ const occupations = [
 
 export function RegisterForm() {
   const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
-  const navigate = useNavigate();
-
-  const handleRegisterData = (data: Inputs) => {
-    console.log("Datos recibidos:", data);
-    navigate("/audichek/recomendaciones");
-  };
+  const { handleRegister } = useRegisterVM();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    handleRegisterData(data);
+    const { acceptPolicy, ...personData } = data;
+    handleRegister(personData);
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
       <div className="card shadow p-4 bg-white rounded" style={{ maxWidth: "500px", width: "100%" }}>
         <h2 className="text-center mb-4" style={{ color: "#264e86" }}>Registro</h2>
-
         <form onSubmit={handleSubmit(onSubmit)}>
-
-          {/* Campos existentes */}
-          {/* ... username, email, birthdate, gender, occupation ... */}
 
           {/* Usuario */}
           <div className="mb-3">
@@ -115,19 +109,6 @@ export function RegisterForm() {
 
           {/* Tratamiento de datos */}
           <div className="mb-3">
-            <details className="mb-2">
-              <summary className="text-primary" style={{ cursor: "pointer" }}>
-                Tratamiento de Datos Personales
-              </summary>
-              <div className="mt-2 text-secondary" style={{ fontSize: "0.9rem", maxHeight: "200px", overflowY: "auto" }}>
-                <p>En el desarrollo del proyecto AudiCheck, se reconoce la importancia de la protección de los datos personales de los usuarios. Por ello, se ha adoptado un enfoque responsable, ético y conforme a lo establecido en la Ley Estatutaria 1581 de 2012 y el Decreto 1377 de 2013, que regulan el tratamiento de datos personales en Colombia. El proyecto se guía por los principios de legalidad, finalidad, libertad, veracidad o calidad, transparencia, acceso y circulación restringida, seguridad y confidencialidad.</p>
-                <p>Los datos recolectados a través de la aplicación, tales como nombre, correo electrónico, fecha de nacimiento, género y ocupación, son utilizados exclusivamente con fines académicos y de investigación en el marco del análisis auditivo propuesto. Esta información es almacenada de forma segura en una base de datos protegida, y su tratamiento se limita estrictamente a los fines previamente informados al usuario, garantizando en todo momento su confidencialidad, integridad y disponibilidad.</p>
-                <p>Para proteger los datos personales durante su transmisión, se implementa el uso de protocolos de encriptación como SSL/TLS. Asimismo, se han establecido mecanismos de seguridad en el almacenamiento, restringiendo el acceso únicamente a los miembros autorizados del equipo de desarrollo del proyecto, conforme al principio de seguridad.</p>
-                <p>De acuerdo con el principio de autorización previa e informada, los usuarios son informados de manera clara sobre el tipo de datos que serán recolectados, la finalidad de su uso, y sus derechos como titulares, tales como el acceso, corrección, supresión, revocatoria de la autorización y oposición al tratamiento de sus datos. En ningún caso se compartirán los datos personales con terceros sin el consentimiento expreso del titular.</p>
-                <p>Este tratamiento se ajusta no solo a la legislación colombiana vigente, sino también a las mejores prácticas internacionales en materia de protección de datos personales en entornos digitales.</p>
-              </div>
-            </details>
-
             <div className="form-check">
               <input
                 type="checkbox"

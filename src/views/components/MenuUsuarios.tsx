@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import "../styles/menuUsuarios.css";
+
 // Importa los íconos desde react-icons
 import { FiMapPin, FiHeadphones, FiFolder, FiBarChart, FiLogOut } from "react-icons/fi";
+import React from "react";
 
 const MenuUsuarios = () => {
   return (

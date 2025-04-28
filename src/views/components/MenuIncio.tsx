@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 // Importa íconos de react-icons (ejemplo: FaHome, FaSignInAlt, FaUserPlus)
 import { FaHome, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
+import React from 'react';
 
 export const MenuIncio = () => {
   return (

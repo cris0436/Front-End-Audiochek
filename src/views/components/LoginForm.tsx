@@ -1,10 +1,11 @@
+// src/views/LoginForm.tsx
+
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router-dom";
+import { useLoginVM } from "../../viewmodels/useLoginVM";
 
 type Inputs = {
-
   username: string;
   password: string;
 };
@@ -15,14 +16,11 @@ export function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const navigate = useNavigate();
-  const handleLoginData = (data: Inputs) => {
-    console.log("Datos recibidos:", data);
-    navigate("/audichek/datos-persona");
-  };
+
+  const { handleLogin } = useLoginVM();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    handleLoginData(data);
+    handleLogin(data.username, data.password);
   };
 
   return (
