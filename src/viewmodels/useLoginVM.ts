@@ -8,10 +8,11 @@ export function useLoginVM() {
 
   const handleLogin = async (username: string, password: string) => {
     try {
-      const user = await getUser(username);
+      const user = await login(username , password);
       
       console.log("Usuario autenticado:", user);
-
+      localStorage.setItem("user",  JSON.stringify(user));
+      
       navigate("/audichek/datos-persona");
     } catch (error) {
       // Manejo de error de login

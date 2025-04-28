@@ -19,7 +19,14 @@ function EditUserPage() {
   useEffect(() => {
     getAutenticateUser().then((data) => {
       console.log("Usuario desde backend:", data); 
-      setUser(data);
+      const getUs :Inputs = {
+        username: data.username,
+        email: data.person.email,
+        birthdate: data.person.birth_date,
+        occupation: data.ocupation,
+        gender: ""
+      }
+      setUser(getUs);
     });
   }, []);
   

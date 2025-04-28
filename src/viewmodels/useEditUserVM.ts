@@ -10,19 +10,28 @@ type Inputs = {
   gender: string;
   occupation: string;
 };
+type Inputs2={
+    id : number;
+    username: string;
+    ocupation: string;
+    person: {
+        name: string;
+        email: string;
+        role: string | null;
+        birth_date: string;
+    }
+}
+
 export function useEditUserVM() {
   
     const getAutenticateUser = async () => {
-        let username: string = localStorage.getItem("email") || "";
-        const user = await getUser(username);
-        const userInput = <Inputs>{
-            username: user.userName,
-            email: user.email,
-            birthdate: user.fechaNacimiento.toString(),
-            gender: user.genero,
-            occupation: user.ocupacion,
-        };
-        return userInput;
+        let user: string = localStorage.getItem("user") || "";
+        
+        /*const user = await getUser(username);
+       */
+        const us =JSON.parse(user) as Inputs2;
+        console.log(typeof us);
+        return us;
     }
 
     const sendUserData = async (data: Usuario) => {
