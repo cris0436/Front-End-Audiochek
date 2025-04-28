@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {getUser}  from "../service/getUser";
-import { updateUser } from "../service/UpdateUser";
+import { updateUser } from "../service/updateUser";
 import Usuario from "../models/Usuario";
 type Inputs = {
   username: string;
