@@ -54,7 +54,7 @@ const DemostrarAudimetriaLarga = () => {
           {/* Si no hay datos, mostramos un mensaje */}
           {sinDatos ? (
             <div className="text-center">
-              <p>🚫 Sin datos de audimetría</p>
+              <p>🚫 Sin datos de audimetría.</p>
             </div>
           ) : (
             // Si hay datos, mostramos la gráfica
