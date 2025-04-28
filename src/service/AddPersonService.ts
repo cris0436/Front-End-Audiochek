@@ -1,16 +1,12 @@
 // src/services/personService.ts
+import Usuario  from "../models/Usuario";
 
-export type PersonData = {
-    username: string;
-    email: string;
-    birthdate: string;
-    gender: string;
-    occupation: string;
-  };
-  
-export default async function registerPerson(data: PersonData): Promise<any> {
+export default async function registerPerson(data: Usuario ): Promise<any> {
     try {
-      const response = await fetch("http://localhost:8080/api/persons", {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      console.log("API URL:", apiUrl);
+/*
+      const response = await fetch(`${apiUrl}/api/persons`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -20,7 +16,8 @@ export default async function registerPerson(data: PersonData): Promise<any> {
         throw new Error("Error registrando persona");
       }
   
-      return await response.json();
+      return await response.json();*/
+      localStorage.setItem("user", JSON.stringify(data));
     } catch (error) {
       console.error("Error adding person:", error);
       throw error;

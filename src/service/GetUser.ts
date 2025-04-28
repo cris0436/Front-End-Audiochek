@@ -1,21 +1,43 @@
 import Usuario from '../models/Usuario.ts';
 
-class GetUser {
-  async getUser(id: string): Promise<Usuario> {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+
+export async function getUser(userName: string): Promise<Usuario> {
+
+    const apiUrl = import.meta.env.VITE_API_URL;
+    console.log("API URL:", apiUrl);
+    try {
+   /* const response = await fetch(`${apiUrl}/users/${userName}`);
     const data = await response.json();
+    const fetchedUserName = data.username || "DefaultUser"; 
+    const ocupacion = data.ocupacion?.name || "Sin ocupación"; 
+    const fechaNacimiento = data.ocupacion?.birthdate || undefined;
+    const usuario = new Usuario(fetchedUserName, undefined, ocupacion, fechaNacimiento);*/
+    const usuario = {
+      username: "Maria123",
+      email: "maria@example.com",
+      birthdate: "1990-05-20",
+      gender: "Femenino",
+      occupation: "Docente"
+    };
+    const usuario1 = new Usuario(
+      usuario.username,
+      undefined,
+      usuario.email, 
+      usuario.occupation, 
+      new Date(usuario.birthdate))
+      
+    localStorage.setItem("user", JSON.stringify(usuario1));
+    localStorage.setItem("email",JSON.stringify(usuario1.email)) // Guardar el usuario en localStorage
+    return usuario1;
     
-    // Extraer y transformar los datos necesarios para crear el objeto Usuario
-    const userName = data.username || "DefaultUser"; // Ajusta según el JSON de la API
-    const ocupacion = data.ocupacion?.name || "Sin ocupación"; // Ajusta según el JSON de la API
-    const fechaNacimiento = data.ocupacion?.birthdate || undefined; // Ajusta según el JSON de la API
+    }
+    catch (error) {
+      console.error("Error fetching user data:", error);
+      throw error;
+    }
 
-    // Crear instancia de Usuario
-    const usuario = new Usuario(userName,undefined, ocupacion, fechaNacimiento);
 
-    return usuario;
   }
-}
-export default GetUser;
+
 
 

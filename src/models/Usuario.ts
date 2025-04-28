@@ -1,19 +1,33 @@
 class Usuario {
     private _userName: string;
+    private _email: string;
     private _contrasena: string;
     private _ocupacion: string;
     private _fechaNacimiento: Date;
+    email: string;
+    genero: string;
     
-    constructor(userName: string, contrasena: string | undefined, ocupacion: string, fechaNacimiento: Date) {
+    
+    constructor(
+
+      userName: string, 
+      contrasena: string | undefined, 
+      email:string, 
+      ocupacion: string, 
+      fechaNacimiento: Date) 
+      
+      {
       if (typeof contrasena === "undefined") {
       // Caso en el que no se proporciona contraseña
       this._userName = userName;
+      this._email = email;
       this._ocupacion = ocupacion;
       this.fechaNacimiento = fechaNacimiento; 
       } else {
       // Caso en el que se proporciona contraseña
       this._userName = userName;
       this._contrasena = contrasena;
+      this._email = email;
       this._ocupacion = ocupacion;
       this.fechaNacimiento = fechaNacimiento; 
       }

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import audios from "../assets/audios";
 import Audimetria from "../models/Audimetria";
 import AudimetryResults from "../models/AudiometryResults";
-
+import guardarAudimetiria from "../service/AddAudiometry";
 export function usePruebaAuditivaVM() {
   const FRECUENCIAS = [
     audios.sound8, audios.sound10, audios.sound12, audios.sound15,
@@ -35,8 +35,9 @@ export function usePruebaAuditivaVM() {
 
     if (indexFrecuencias === FRECUENCIAS.length - 1 && canal === "derecha") {
       setFinalizado(true);
-      const datos = audimetria.obtenerDatosParaGuardar();
+      const datos = JSON.stringify(audimetria);
       localStorage.setItem("audimetria", JSON.stringify(datos));
+      guardarAudimetiria(audimetria)
       setTimeout(() => navigate("/audichek/resultados"), 1500);
       return;
     }
@@ -51,9 +52,14 @@ export function usePruebaAuditivaVM() {
     setIndexVol(0);
   };
 
+  const ajustarfomratoFrecuencia = (frecuencia: string) => {
+    const match = frecuencia.match(/\/src\/assets\/(\d+)\.wav/);
+    return match ? match[1] : ""; 
+  }
+
   const guardarAudimetria = (escucho: boolean) => {
     const respuestaDb = db[indexVol];
-    const frecuencia = FRECUENCIAS[indexFrecuencias];
+    const frecuencia = ajustarfomratoFrecuencia(FRECUENCIAS[indexFrecuencias]);
     const nuevoResultado = new AudimetryResults(frecuencia, respuestaDb, canal === "derecha", canal === "derecha", escucho);
     audimetria.addAudiometryResult(nuevoResultado);
   };

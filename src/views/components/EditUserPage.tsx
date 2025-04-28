@@ -1,19 +1,41 @@
 import React from "react";
-import { UpdateUserForm } from "../../viewmodels/UpdateUserForm.tsx";
+import { UpdateUserForm } from "../../viewmodels/UpdateUserForm";
+import { useEditUserVM } from "../../viewmodels/useEditUserVM";
+import Usuario from "../../models/Usuario";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
-const user = {
-  username: "Maria123",
-  email: "maria@example.com",
-  birthdate: "1990-05-20",
-  gender: "Femenino",
-  occupation: "Docente"
+type Inputs = {
+  username: string;
+  email: string;
+  birthdate: string;
+  gender: string;
+  occupation: string;
 };
+function EditUserPage() {
+  const [user, setUser] = useState<Inputs | null>(null);
+  const { getAutenticateUser, sendUserData } = useEditUserVM();
 
- function EditUserPage() {
-  const handleUpdate = () => {
-    console.log("Datos actualizados:", );
-    // Aquí podrías enviar los datos a tu backend
+  useEffect(() => {
+    getAutenticateUser().then((data) => {
+      console.log("Usuario desde backend:", data); 
+      setUser(data);
+    });
+  }, []);
+  
+
+  const handleUpdate = (data: Inputs) => {
+    const UpdateUser = new Usuario(
+      data.username,
+      undefined, 
+      data.email,
+      data.occupation,
+      new Date(data.birthdate)
+    );
+    sendUserData(UpdateUser);
   };
+
+  if (!user) return <div>Cargando...</div>;
 
   return <UpdateUserForm userData={user} onUpdate={handleUpdate} />;
 }

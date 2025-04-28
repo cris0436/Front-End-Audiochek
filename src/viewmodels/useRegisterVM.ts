@@ -1,12 +1,13 @@
 // src/viewmodels/useRegisterVM.ts
 
 import { useNavigate } from "react-router-dom";
-import registerPerson, { PersonData } from "../service/AddPersonService";
+import registerPerson  from "../service/addPersonService";
+import Usuario from "../models/Usuario";
 
 export function useRegisterVM() {
   const navigate = useNavigate();
 
-  const handleRegister = async (data: PersonData) => {
+  const handleRegister = async (data: Usuario) => {
     try {
       await registerPerson(data);
       navigate("/audichek/recomendaciones");

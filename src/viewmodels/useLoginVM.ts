@@ -2,13 +2,13 @@
 
 import { useNavigate } from "react-router-dom";
 import { login } from "../service/login";
-
+import { getUser } from "../service/getUser";
 export function useLoginVM() {
   const navigate = useNavigate();
 
   const handleLogin = async (username: string, password: string) => {
     try {
-      const user = await login(username, password);
+      const user = await getUser(username);
       
       console.log("Usuario autenticado:", user);
 
