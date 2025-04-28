@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import audios from "../assets/audios";
 import Audimetria from "../models/Audimetria";
-import AudimetryResults from "../models/AudiometryResults";
+import AudimetryResults from "../models/audiometryResults";
 import guardarAudimetiria from "../service/AddAudiometry";
 export function usePruebaAuditivaVM() {
   const FRECUENCIAS = [
