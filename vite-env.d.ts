@@ -19,3 +19,4 @@ declare module "*.wav" {
     export default value;
   }
   
+  

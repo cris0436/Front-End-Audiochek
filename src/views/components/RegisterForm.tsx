@@ -1,9 +1,8 @@
-// src/views/RegisterForm.tsx
-
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRegisterVM } from "../../viewmodels/useRegisterVM";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Usuario from "../../models/Usuario";
 
 type Inputs = {
   username: string;
@@ -11,6 +10,8 @@ type Inputs = {
   birthdate: string;
   gender: string;
   occupation: string;
+  password: string;
+  confirmPassword: string;
   acceptPolicy: boolean;
 };
 
@@ -23,13 +24,24 @@ const occupations = [
 ];
 
 export function RegisterForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm<Inputs>();
   const { handleRegister } = useRegisterVM();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const { acceptPolicy, ...personData } = data;
-    handleRegister(personData);
+    const person = new Usuario(
+      personData.username,
+      personData.password,
+      personData.email,
+      personData.occupation,
+      new Date(personData.birthdate)
+    ); 
+    handleRegister(person);
   };
+
+  // Verificar si las contraseñas coinciden
+  const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
@@ -105,6 +117,34 @@ export function RegisterForm() {
               ))}
             </select>
             {errors.occupation && <div className="invalid-feedback">{errors.occupation.message}</div>}
+          </div>
+
+          {/* Contraseña */}
+          <div className="mb-3">
+            <label className="form-label">Contraseña</label>
+            <input
+              {...register("password", { required: "La contraseña es obligatoria" })}
+              type="password"
+              className={`form-control ${errors.password ? "is-invalid" : ""}`}
+              placeholder="Ingrese su contraseña"
+            />
+            {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
+          </div>
+
+          {/* Confirmar contraseña */}
+          <div className="mb-3">
+            <label className="form-label">Confirmar contraseña</label>
+            <input
+              {...register("confirmPassword", {
+                required: "Confirme su contraseña",
+                validate: value =>
+                  value === password || "Las contraseñas no coinciden"
+              })}
+              type="password"
+              className={`form-control ${errors.confirmPassword ? "is-invalid" : ""}`}
+              placeholder="Confirme su contraseña"
+            />
+            {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword.message}</div>}
           </div>
 
           {/* Tratamiento de datos */}

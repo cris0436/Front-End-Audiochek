@@ -17,7 +17,7 @@ export async function updateUser(username: string, data: Usuario) {
         throw new Error("Error updating user data");
         }*/
        localStorage.setItem("user", JSON.stringify(data));
-       localStorage.setItem("email", JSON.stringify(data.email));
+       localStorage.setItem("email", JSON.stringify(data.getEmail())); // Guardar el usuario en localStorage
     
     } catch (error) {
         console.error("Error updating user data:", error);
