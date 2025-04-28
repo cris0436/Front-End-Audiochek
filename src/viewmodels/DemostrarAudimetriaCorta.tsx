@@ -81,7 +81,7 @@ const DemostrarAudimetriaCorta = () => {
               className="bg-white border border-primary rounded-4 p-4 shadow text-center w-100"
               style={{ maxWidth: "300px" }}
             >
-              <p className="mb-1 text-muted">Estado auditivotest</p>
+              <p className="mb-1 text-muted">Estado auditivo</p>
               <h3 className="fw-bold text-primary mb-0">{estadoAuditivo}</h3>
             </div>
           </div>
