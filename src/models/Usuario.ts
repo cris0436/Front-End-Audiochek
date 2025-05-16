@@ -1,13 +1,12 @@
+import { Getter, Setter } from "tslombok";
+
 class Usuario {
-    
+    private _cedula: string;
     private _userName: string;
     private _email: string;
     private _contrasena: string;
     private _ocupacion: string;
     private _fechaNacimiento: Date;
-    private email: string;
-    private genero: string;
-    private password: any;
     
     getPassword() {
        return this._contrasena;
@@ -16,7 +15,7 @@ class Usuario {
       return this._email;
     }
     constructor(
-
+      cedula: string,
       userName: string, 
       contrasena: string | undefined, 
       email:string, 
@@ -26,12 +25,14 @@ class Usuario {
       {
       if (typeof contrasena === "undefined") {
       // Caso en el que no se proporciona contraseña
+      this._cedula = cedula;
       this._userName = userName;
       this._email = email;
       this._ocupacion = ocupacion;
       this.fechaNacimiento = fechaNacimiento; 
       } else {
       // Caso en el que se proporciona contraseña
+      this._cedula = cedula;
       this._userName = userName;
       this._contrasena = contrasena;
       this._email = email;
@@ -84,6 +85,22 @@ class Usuario {
         throw new Error("La fecha de nacimiento debe ser anterior a la fecha actual.");
       }
     }
+
+        // Getter and Setter for _cedula
+        get cedula(): string {
+          return this._cedula;
+      }
+      set cedula(value: string) {
+          this._cedula = value;
+      }
+      // Getter and Setter for _email
+      get email(): string {
+          return this._email;
+      }
+      set email(value: string) {
+          this._email = value;
+      }
+  
   }
   export default Usuario;
   

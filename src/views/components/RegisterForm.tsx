@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Usuario from "../../models/Usuario";
 
 type Inputs = {
+  cedula: string;
   username: string;
   email: string;
   birthdate: string;
@@ -24,30 +25,43 @@ const occupations = [
 ];
 
 export function RegisterForm() {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm<Inputs>();
+  const { register, handleSubmit, formState: { errors, isValid }, watch } = useForm<Inputs>({
+    mode: "onChange"
+  });
+
   const { handleRegister } = useRegisterVM();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const { acceptPolicy, ...personData } = data;
     const person = new Usuario(
+      personData.cedula,
       personData.username,
       personData.password,
       personData.email,
       personData.occupation,
       new Date(personData.birthdate)
-    ); 
+    );
     handleRegister(person);
   };
 
-  // Verificar si las contraseñas coinciden
   const password = watch("password");
-  const confirmPassword = watch("confirmPassword");
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
       <div className="card shadow p-4 bg-white rounded" style={{ maxWidth: "500px", width: "100%" }}>
         <h2 className="text-center mb-4" style={{ color: "#264e86" }}>Registro</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
+
+          {/* Cédula */}
+          <div className="mb-3">
+            <label className="form-label">Cédula</label>
+            <input
+              {...register("cedula", { required: "La cédula es obligatoria" })}
+              className={`form-control ${errors.cedula ? "is-invalid" : ""}`}
+              placeholder="Ingrese su cédula"
+            />
+            {errors.cedula && <div className="invalid-feedback">{errors.cedula.message}</div>}
+          </div>
 
           {/* Usuario */}
           <div className="mb-3">
@@ -78,11 +92,18 @@ export function RegisterForm() {
             {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
           </div>
 
-          {/* Fecha de nacimiento */}
+          {/* Fecha de nacimiento con validación personalizada */}
           <div className="mb-3">
             <label className="form-label">Fecha de nacimiento</label>
             <input
-              {...register("birthdate", { required: "La fecha de nacimiento es obligatoria" })}
+              {...register("birthdate", {
+                required: "La fecha de nacimiento es obligatoria",
+                validate: (value) => {
+                  const inputDate = new Date(value);
+                  const today = new Date();
+                  return inputDate <= today || "La fecha no puede ser mayor a la actual";
+                }
+              })}
               type="date"
               className={`form-control ${errors.birthdate ? "is-invalid" : ""}`}
             />
@@ -105,7 +126,7 @@ export function RegisterForm() {
           </div>
 
           {/* Ocupación */}
-          <div className="mb-4">
+          <div className="mb-3">
             <label className="form-label">Ocupación</label>
             <select
               {...register("occupation", { required: "Seleccione una ocupación" })}
@@ -148,7 +169,7 @@ export function RegisterForm() {
           </div>
 
           {/* Tratamiento de datos */}
-          <div className="mb-3">
+          <div className="mb-4">
             <div className="form-check">
               <input
                 type="checkbox"
@@ -157,15 +178,19 @@ export function RegisterForm() {
                 {...register("acceptPolicy", { required: "Debe aceptar las políticas de tratamiento de datos" })}
               />
               <label className="form-check-label" htmlFor="acceptPolicy">
-                Acepto las políticas de tratamiento de datos personales
+                Acepto las <a href="/politicas" target="_blank" rel="noopener noreferrer">políticas de tratamiento de datos personales</a>
               </label>
-              {errors.acceptPolicy && (
-                <div className="invalid-feedback d-block">{errors.acceptPolicy.message}</div>
-              )}
             </div>
+            {errors.acceptPolicy && (
+              <div className="invalid-feedback d-block">{errors.acceptPolicy.message}</div>
+            )}
+            <small className="text-muted d-block mt-2">
+              Tus datos personales serán tratados conforme a la ley vigente de protección de datos. 
+              Al aceptar, autorizas su uso para fines administrativos, de contacto, y mejora de servicios.
+            </small>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">
+          <button type="submit" className="btn btn-primary w-100" disabled={!isValid}>
             Registrarse
           </button>
         </form>

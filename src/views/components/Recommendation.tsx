@@ -6,11 +6,11 @@ import lugarSilencioso from '../../assets/lugar_silencioso.png';
 import usoAudifonos from '../../assets/uso_audifonos.png';
 import volMax from '../../assets/vol_max.png';
 
-const Recommendation: React.FC = () => {
+function Recommendation() {
   const navigate = useNavigate();
   const btnAceptar = () => {
-    navigate("/audichek/testauditivo")
-  }
+    navigate("/audichek/testauditivo");
+  };
   return (
     <div className="container mt-5">
       <div className="card shadow-lg border-0">
@@ -47,6 +47,6 @@ const Recommendation: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Recommendation;

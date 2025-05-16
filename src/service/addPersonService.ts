@@ -6,6 +6,7 @@ import Usuario  from "../models/Usuario";
 export default async function registerPerson(data: Usuario ): Promise<any> {
     try {
       const dataRequest ={
+        cedula: data.cedula,
         name: data.userName,
         email: data.getEmail(),
         birth_date: data.fechaNacimiento,
@@ -16,9 +17,7 @@ export default async function registerPerson(data: Usuario ): Promise<any> {
       }
     
       
-      console.log(JSON.stringify(dataRequest));
       const apiUrl = import.meta.env.VITE_API_URL;
-      console.log("API URL:", apiUrl);
 
       const response = await fetch(`${apiUrl}/users/`, {
         method: "POST",
