@@ -11,7 +11,7 @@ import {
 
 const DemostrarAudimetriaCorta = () => {
   const [data, setData] = useState<{ x: string; y: number }[]>([]);
-  const [estadoAuditivo, setEstadoAuditivo] = useState(0);
+  const [estadoAuditivo] = useState(0);
   const [sinDatos, setSinDatos] = useState(false);  // Nueva variable de estado
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const DemostrarAudimetriaCorta = () => {
     } else {
       // Procesamos los datos para obtener los promedios de decibelios por frecuencia
       const frecuencias = Object.keys(datosGuardados.derecha);
-      let chartData: { x: string; y: number }[] = [];
+      const chartData: { x: string; y: number }[] = [];
 
       frecuencias.forEach((frecuencia) => {
         const dbIzquierda = datosGuardados.izquierda[frecuencia];

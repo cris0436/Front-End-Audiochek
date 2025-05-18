@@ -3,7 +3,7 @@
 /// <reference types="vite/client" />
 import Usuario  from "../models/Usuario";
 
-export default async function registerPerson(data: Usuario ): Promise<any> {
+export default async function registerPerson(data: Usuario ): Promise<unknown> {
     try {
       const dataRequest ={
         cedula: data.cedula,

@@ -1,4 +1,3 @@
-import { Getter, Setter } from "tslombok";
 
 class Usuario {
     private _cedula: string;
@@ -87,7 +86,7 @@ class Usuario {
     }
 
         // Getter and Setter for _cedula
-        get cedula(): string {
+      get cedula(): string {
           return this._cedula;
       }
       set cedula(value: string) {
