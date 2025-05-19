@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { GetAudiometry } from "../service/getAudiometry";
 import {
   LineChart,
   Line,
@@ -9,36 +10,35 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const DemostrarAudimetriaCorta = () => {
+const  DemostrarAudimetriaCorta = () => {
   const [data, setData] = useState<{ x: string; y: number }[]>([]);
-  const [estadoAuditivo] = useState(0);
+  const [estadoAuditivo,setEstadoAuditivo] = useState(0);
   const [sinDatos, setSinDatos] = useState(false);  // Nueva variable de estado
-
+  const {getAudiometryData} =GetAudiometry()
   useEffect(() => {
-    // Recuperamos los datos de localStorage
-    const datosGuardados = JSON.parse(localStorage.getItem("audimetria") || "{}");
+    const fetchData = async () => {
+      // Recuperamos los datos de localStorage
+      const datosGuardados = await getAudiometryData();
 
-    // Verificamos si hay datos en localStorage
-    if (Object.keys(datosGuardados).length === 0 || !datosGuardados?.izquierda || !datosGuardados?.derecha) {
-      setSinDatos(true);  // Si no hay datos, actualizamos el estado para mostrar el mensaje
-    } else {
-      // Procesamos los datos para obtener los promedios de decibelios por frecuencia
-      const frecuencias = Object.keys(datosGuardados.derecha);
-      const chartData: { x: string; y: number }[] = [];
+      if (Object.keys(datosGuardados).length === 0 || !datosGuardados?.[0] || !datosGuardados?.[2]) {
+        setSinDatos(true);  // Si no hay datos, actualizamos el estado para mostrar el mensaje
+      } else {
+        // Procesamos los datos para obtener los promedios de decibelios por frecuencia
+        const frecuencias = datosGuardados[1]
+        const chartData: { x: string; y: number }[] = [];
+        for (let i=0;i<frecuencias.length; i++){
+          const dbIzquierda = datosGuardados[0][i];
+          const dbDerecha = datosGuardados[2][i];
+          const promedio = (dbIzquierda + dbDerecha) / 2;
+          chartData.push({ x: frecuencias[i], y: promedio });
+        }
+        
 
-      frecuencias.forEach((frecuencia) => {
-        const dbIzquierda = datosGuardados.izquierda[frecuencia];
-        const dbDerecha = datosGuardados.derecha[frecuencia];
-
-        // Calculamos el promedio de los dos canales para cada frecuencia
-        const promedio = (dbIzquierda + dbDerecha) / 2;
-
-        // Agregamos los datos al array para la gráfica
-        chartData.push({ x: frecuencia, y: promedio });
-      });
-
-      setData(chartData);
-    }
+        setData(chartData);
+        setEstadoAuditivo(datosGuardados[4] || 0);
+      }
+    };
+    fetchData();
   }, []);
 
   return (

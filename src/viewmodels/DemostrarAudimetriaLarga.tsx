@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { GetAudiometry } from "../service/getAudiometry";
 import {
   LineChart,
   Line,
@@ -13,34 +14,38 @@ import {
 const DemostrarAudimetriaLarga = () => {
   const [data, setData] = useState<{ x: string; derecho: number; izquierdo: number }[]>([]);
   const [estadoAuditivo, setEstadoAuditivo] = useState(0);
-  const [sinDatos, setSinDatos] = useState(false);  // Nueva variable de estado
+  const [sinDatos, setSinDatos] = useState(false);
+  const { getAudiometryData } = GetAudiometry();
 
   useEffect(() => {
-    // Recuperamos los datos de localStorage
-    const datosGuardados = JSON.parse(localStorage.getItem("audimetria") || "{}");
+    const fetchData = async () => {
+      try {
+        const datosGuardados = await getAudiometryData();
 
-    // Verificamos si hay datos en localStorage
-    if (Object.keys(datosGuardados).length === 0 || !datosGuardados?.izquierda || !datosGuardados?.derecha) {
-      setSinDatos(true);  // Si no hay datos, actualizamos el estado para mostrar el mensaje
-    } else {
-      // Procesamos los datos para crear las dos líneas de la gráfica (derecha e izquierda)
-      const frecuencias = Object.keys(datosGuardados.derecha);
-      let chartData: { x: string; derecho: number; izquierdo: number }[] = [];
+        if (!datosGuardados || !datosGuardados[0] || !datosGuardados[2]) {
+          setSinDatos(true);
+          return;
+        }
 
-      frecuencias.forEach((frecuencia) => {
-        const dbIzquierda = datosGuardados.izquierda[frecuencia];
-        const dbDerecha = datosGuardados.derecha[frecuencia];
+        // Procesamos los datos para crear las dos líneas de la gráfica (derecho e izquierdo)
+        const frecuencias = datosGuardados[1];
+        let chartData: { x: string; derecho: number; izquierdo: number }[] = [];
 
-        // Agregamos los datos de cada frecuencia en la gráfica
-        chartData.push({
-          x: frecuencia,
-          derecho: dbDerecha,
-          izquierdo: dbIzquierda,
-        });
-      });
+        for (let i = 0; i < frecuencias.length; i++) {
+          const dbIzquierda = datosGuardados[0][i];
+          const dbDerecha = datosGuardados[2][i];
+          chartData.push({ x: String(frecuencias[i]), derecho: dbDerecha, izquierdo: dbIzquierda });
+        }
 
-      setData(chartData);
-    }
+        setData(chartData);
+        setEstadoAuditivo(datosGuardados[4] || 0); // Actualiza el estado auditivo
+      } catch (error) {
+        console.error("Error obteniendo los datos de audiometría:", error);
+        setSinDatos(true);
+      }
+    };
+
+    fetchData(); // Llamamos a la función dentro de useEffect
   }, []);
 
   return (
@@ -48,16 +53,14 @@ const DemostrarAudimetriaLarga = () => {
       <div className="card shadow-lg rounded-4 border-0" style={{ width: "100%", maxWidth: "650px" }}>
         <div className="card-body text-center">
           <h2 className="card-title mb-4 text-primary fw-bold">
-            🎧 Resultados Audimetría (oido derecho y izqueido)
+            🎧 Resultados Audimetría (Oído derecho e izquierdo)
           </h2>
 
-          {/* Si no hay datos, mostramos un mensaje */}
           {sinDatos ? (
             <div className="text-center">
               <p>🚫 Sin datos de audimetría.</p>
             </div>
           ) : (
-            // Si hay datos, mostramos la gráfica
             <div style={{ width: "100%", height: 350 }}>
               <ResponsiveContainer>
                 <LineChart data={data}>
@@ -87,12 +90,8 @@ const DemostrarAudimetriaLarga = () => {
             </div>
           )}
 
-          {/* Estado auditivo centrado */}
           <div className="mt-5 d-flex justify-content-center">
-            <div
-              className="bg-white border border-primary rounded-4 p-4 shadow text-center w-100"
-              style={{ maxWidth: "300px" }}
-            >
+            <div className="bg-white border border-primary rounded-4 p-4 shadow text-center w-100" style={{ maxWidth: "300px" }}>
               <p className="mb-1 text-muted">Estado auditivo</p>
               <h3 className="fw-bold text-primary mb-0">{estadoAuditivo}</h3>
             </div>

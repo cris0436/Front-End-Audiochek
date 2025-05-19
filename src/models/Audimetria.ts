@@ -5,13 +5,9 @@ class Audimetria {
     public addAudiometryResult(audiometryResult: AudimeetryResults): void {
       this.AudiometyResults.push(audiometryResult);
     }
-    public obtenerDatosParaGuardar() {
-      return this.AudiometyResults.map((result) => ({
-        frecuency: result.frecuency,
-        decibel: result.decibel,
-        right_ear: result.right_ear,
-        left_ear: result.left_ear,
-      }));
+    
+    public getAudiometryResults(): AudimeetryResults[] {
+      return this.AudiometyResults;
     }
 
     

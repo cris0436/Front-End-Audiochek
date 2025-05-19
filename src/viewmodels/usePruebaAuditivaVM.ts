@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import audios from "../assets/audios";
 import Audimetria from "../models/Audimetria";
 import AudimetryResults from "../models/AudiometryResults";
-import guardarAudimetiria from "../service/addAudiometry";
+import {guardarAudimetiriaDb} from "../service/addAudiometry";
+
 export function usePruebaAuditivaVM() {
   const FRECUENCIAS = [
     audios.sound8, audios.sound10, audios.sound12, audios.sound15,
@@ -11,7 +12,7 @@ export function usePruebaAuditivaVM() {
   ];
   const VOL = [0.0000894335192, 0.00028281, 0.000894335, 0.00282813, 0.00894335, 0.02828136, 0.089433519, 0.28283, 0.8943];
   const db = [10, 20, 30, 40, 50, 60, 70, 80, 90];
-
+  const {addAudiometry} = guardarAudimetiriaDb();
   const navigate = useNavigate();
   const [audimetria] = useState(new Audimetria());
   const [canal, setCanal] = useState<"izquierda" | "derecha">("izquierda");
@@ -35,9 +36,8 @@ export function usePruebaAuditivaVM() {
 
     if (indexFrecuencias === FRECUENCIAS.length - 1 && canal === "derecha") {
       setFinalizado(true);
-      const datos = JSON.stringify(audimetria);
-      localStorage.setItem("audimetria", JSON.stringify(datos));
-      guardarAudimetiria(audimetria)
+      localStorage.setItem("audimetria", JSON.stringify(audimetria));
+      addAudiometry(audimetria)
       setTimeout(() => navigate("/audichek/resultados"), 1500);
       return;
     }
@@ -59,8 +59,8 @@ export function usePruebaAuditivaVM() {
 
   const guardarAudimetria = (escucho: boolean) => {
     const respuestaDb = db[indexVol];
-    const frecuencia = ajustarfomratoFrecuencia(FRECUENCIAS[indexFrecuencias]);
-    const nuevoResultado = new AudimetryResults(frecuencia, respuestaDb, canal === "derecha", canal === "derecha", escucho);
+    const frecuencia = parseInt(ajustarfomratoFrecuencia(FRECUENCIAS[indexFrecuencias]), 10);
+    const nuevoResultado = new AudimetryResults(frecuencia, respuestaDb, canal === "derecha",escucho);
     audimetria.addAudiometryResult(nuevoResultado);
   };
 

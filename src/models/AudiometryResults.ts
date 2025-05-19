@@ -1,51 +1,50 @@
 
-class AudimeetryResults {
-    private _frecuency: string;
-    private _decibel: number;
-    private _right_ear: boolean;
-    private _left_ear: boolean;
-    private _escucho: boolean ;
+class AudiometryResults {
+    private frequency: number;
+    private decibel: number;
+    private ear: boolean;
+    private isEar: boolean; // Convención de nombres en camelCase
     
-    constructor(frecuency: string, decibel: number, right_ear: boolean, left_ear: boolean, escucho: boolean) {
-        this._frecuency = frecuency;
-        this._decibel = decibel;
-        this._right_ear = right_ear;
-        this._left_ear = left_ear;
-        this._escucho = escucho;
+    constructor(frecuency: number, decibel: number, ear: boolean, isEar: boolean) {
+        this.frequency = frecuency;
+        this.decibel = decibel;
+        this.ear = ear;
+        this.isEar = isEar;
     }
 
-    public get frecuency(): string {
-        return this._frecuency;
+    // Getters
+    public getFrequency(): number {
+        return this.frequency;
     }
 
-    public set frecuency(value: string) {
-        this._frecuency = value;
+    public getDecibel(): number {
+        return this.decibel;
     }
 
-    public get decibel(): number {
-        return this._decibel;
+    public getEar(): boolean {
+        return this.ear;
     }
 
-    public set decibel(value: number) {
-        this._decibel = value;
+    public getIsEar(): boolean {
+        return this.isEar;
     }
 
-    public get right_ear(): boolean {
-        return this._right_ear;
+    // Setters
+    public setFrequency(frequency: number): void {
+        this.frequency = frequency;
     }
 
-    public set right_ear(value: boolean) {
-        this._right_ear = value;
+    public setDecibel(decibel: number): void {
+        this.decibel = decibel;
     }
 
-    public get left_ear(): boolean {
-        return this._left_ear;
+    public setEar(ear: boolean): void {
+        this.ear = ear;
     }
 
-    public set left_ear(value: boolean) {
-        this._left_ear = value;
+    public setIsEar(isEar: boolean): void {
+        this.isEar = isEar;
     }
-
-
 }
-export default AudimeetryResults;
+
+export default AudiometryResults;

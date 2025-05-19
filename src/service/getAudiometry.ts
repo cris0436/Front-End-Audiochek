@@ -1,28 +1,41 @@
 
-interface ImportMeta {
-  env: {
-    VITE_API_URL: string;
-  };
-}
+import { useNavigate } from "react-router-dom";
 
-export async function getAudiometryData(): Promise<any> {
-  try {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    console.log("API URL:", apiUrl);
-    
+export function GetAudiometry() {
+    const navigate = useNavigate();
 
-    const response = await fetch(`${apiUrl}/audiometries`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
+    async function getAudiometryData(): Promise<any> {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        const token = localStorage.getItem("token");
 
-    if (!response.ok) {
-      throw new Error("Error fetching audiometry data");
+        try {
+            if (!token) {
+                console.error("No se encontró el token. Redirigiendo...");
+                navigate("/");
+                return null;
+            }
+
+            const response = await fetch(`${apiUrl}/audiometries/`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token.replace(/"/g, '')}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Error fetching audiometry data");
+            }
+
+            const rawData = await response.json();
+
+            console.log(rawData);
+            return rawData;
+        } catch (error) {
+            console.error("Error fetching audiometry data:", error);
+            throw error;
+        }
     }
 
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching audiometry data:", error);
-    throw error;
-  }
+    return { getAudiometryData };
 }

@@ -1,6 +1,8 @@
 import Usuario from "../models/Usuario";
 import { useSession } from "../service/getSession.ts";
 import { useNavigate } from "react-router-dom";
+
+
 export function useUserUpdater() {
   const { getSession } = useSession();
   const navigate = useNavigate();
