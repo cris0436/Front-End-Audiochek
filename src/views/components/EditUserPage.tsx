@@ -1,11 +1,12 @@
 import React from "react";
-import { UpdateUserForm } from "../../viewmodels/UpdateUserForm";
-import { useEditUserVM } from "../../viewmodels/useEditUserVM";
+import { UpdateUserForm } from "./UpdateUserForm";
+import { UpdateUserVM } from "../../viewmodels/useEditUserVM";
 import Usuario from "../../models/Usuario";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 
 type Inputs = {
+  cedula: string;
+  password: string;
   username: string;
   email: string;
   birthdate: string;
@@ -14,14 +15,14 @@ type Inputs = {
 };
 function EditUserPage() {
   const [user, setUser] = useState<Inputs | null>(null);
-  const { getAutenticateUser, sendUserData } = useEditUserVM();
-
+  const { updateUserVM, getSessionVM } = UpdateUserVM();
   useEffect(() => {
-    getAutenticateUser().then((data) => {
-      console.log("Usuario desde backend:", data); 
+    getSessionVM().then((data) => {
       const getUs :Inputs = {
+        cedula: data.person.cedula || "", // Ensure cedula is provided
         username: data.username,
         email: data.person.email,
+        password: "",
         birthdate: data.person.birth_date,
         occupation: data.ocupation,
         gender: ""
@@ -33,13 +34,14 @@ function EditUserPage() {
 
   const handleUpdate = (data: Inputs) => {
     const UpdateUser = new Usuario(
+      data.cedula,
       data.username,
-      undefined, 
+      data.password, 
       data.email,
       data.occupation,
       new Date(data.birthdate)
     );
-    sendUserData(UpdateUser);
+    updateUserVM(UpdateUser);
   };
 
   if (!user) return <div>Cargando...</div>;

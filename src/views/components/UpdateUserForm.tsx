@@ -1,25 +1,29 @@
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
-const occupations = [
-    "Ingeniero", "Médico", "Abogado", "Docente", "Contador", "Administrador", "Arquitecto",
-    "Policía", "Bombero", "Electricista", "Plomero", "Carpintero", "Mecánico", "Enfermero",
-    "Psicólogo", "Diseñador gráfico", "Periodista", "Chef", "Panadero", "Peluquero", "Vendedor",
-    "Agricultor", "Taxista", "Conductor de bus", "Guardia de seguridad", "Soldador", "Tecnólogo en sistemas",
-    "Operario de maquinaria", "Asistente administrativo", "Estilista"
-  ];  
+
 type Inputs = {
+  cedula: string;
   username: string;
   email: string;
   birthdate: string;
   gender: string;
   occupation: string;
+  password: string;
 };
 
 type UpdateUserFormProps = {
   userData: Inputs;
   onUpdate: (updatedData: Inputs) => void;
 };
+
+const occupations = [
+  "Ingeniero", "Médico", "Abogado", "Docente", "Contador", "Administrador", "Arquitecto",
+  "Policía", "Bombero", "Electricista", "Plomero", "Carpintero", "Mecánico", "Enfermero",
+  "Psicólogo", "Diseñador gráfico", "Periodista", "Chef", "Panadero", "Peluquero", "Vendedor",
+  "Agricultor", "Taxista", "Conductor de bus", "Guardia de seguridad", "Soldador", "Tecnólogo en sistemas",
+  "Operario de maquinaria", "Asistente administrativo", "Estilista"
+];
 
 export function UpdateUserForm({ userData, onUpdate }: UpdateUserFormProps) {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>({
@@ -37,6 +41,14 @@ export function UpdateUserForm({ userData, onUpdate }: UpdateUserFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="container p-4">
       <h2 className="text-center mb-4">Actualizar Usuario</h2>
+      <div className="mb-3">
+        <input
+          {...register("cedula", { required: "la cedula es obligatoria" })}
+          placeholder="Cedula"
+          className="form-control"
+        />
+        {errors.cedula && <span className="text-danger">{errors.cedula.message}</span>}
+      </div>
 
       <div className="mb-3">
         <input
@@ -78,7 +90,16 @@ export function UpdateUserForm({ userData, onUpdate }: UpdateUserFormProps) {
         </select>
         {errors.gender && <span className="text-danger">{errors.gender.message}</span>}
       </div>
-
+      <div className="mb-3">
+            <label className="form-label">Contraseña</label>
+            <input
+              {...register("password", { required: "La contraseña es obligatoria" })}
+              type="password"
+              className={`form-control ${errors.password ? "is-invalid" : ""}`}
+              placeholder="Ingrese su contraseña"
+            />
+            {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
+      </div>
       <div className="mb-3">
         <select {...register("occupation", { required: "Seleccione una ocupación" })} className="form-control">
           <option value="">Seleccione su ocupación</option>

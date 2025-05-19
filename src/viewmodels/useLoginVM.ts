@@ -2,7 +2,7 @@
 
 import { useNavigate } from "react-router-dom";
 import { login } from "../service/login";
-import { getUser } from "../service/getUser";
+
 export function useLoginVM() {
   const navigate = useNavigate();
 
@@ -10,12 +10,12 @@ export function useLoginVM() {
     try {
       const user = await login(username , password);
       
-      console.log("Usuario autenticado:", user);
-      localStorage.setItem("user",  JSON.stringify(user));
+      console.log("Usuario autenticado:", user.access_token);
+      localStorage.setItem("token",  JSON.stringify(user.access_token));
       
       navigate("/audichek/datos-persona");
-    } catch (error) {
-      // Manejo de error de login
+    } catch ( error) {
+      console.error("Error en el login:", error);
       alert("Usuario o contraseña incorrectos.");
     }
   };

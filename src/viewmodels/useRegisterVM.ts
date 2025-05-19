@@ -10,8 +10,9 @@ export function useRegisterVM() {
   const handleRegister = async (data: Usuario) => {
     try {
       await registerPerson(data);
-      navigate("/audichek/recomendaciones");
+      navigate("/login");
     } catch (error) {
+      console.error("Error en el registro:", error);
       alert("Error registrando. Por favor, intenta nuevamente.");
     }
   };

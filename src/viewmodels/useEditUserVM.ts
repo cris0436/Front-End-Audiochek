@@ -1,54 +1,17 @@
-import { useEffect } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import {getUser}  from "../service/getUser";
-import { updateUser } from "../service/updateUser";
-import Usuario from "../models/Usuario";
-type Inputs = {
-  username: string;
-  email: string;
-  birthdate: string;
-  gender: string;
-  occupation: string;
-};
-type Inputs2={
-    id : number;
-    username: string;
-    ocupation: string;
-    person: {
-        name: string;
-        email: string;
-        role: string | null;
-        birth_date: string;
-    }
-}
+import  {useSession} from "../service/getSession.ts";
+import { useUserUpdater } from "../service/updateUser.ts";
+import User from "../models/Usuario.ts";
+export function UpdateUserVM() {
+    const { getSession } = useSession();
+    const { updateUser } = useUserUpdater();
+    const updateUserVM = async (username: User) => {
+        return await updateUser(username);
+    };
 
-export function useEditUserVM() {
-  
-    const getAutenticateUser = async () => {
-        let user: string = localStorage.getItem("user") || "";
-        
-        /*const user = await getUser(username);
-       */
-        const us =JSON.parse(user) as Inputs2;
-        console.log(typeof us);
-        return us;
+    const getSessionVM = async () => {
+        const user = await getSession();
+        return user;
     }
 
-    const sendUserData = async (data: Usuario) => {
-        const user = data;
-        console.log("Usuario actualizado:", user);
-        await updateUser(data.userName, user);
-        if (user) {
-            // Aquí puedes realizar la lógica para actualizar el usuario
-            console.log("Usuario actualizado:", user);
-        } else {
-            console.log("Usuario no encontrado");
-        }
-    }
-
-    return { 
-        getAutenticateUser, 
-        sendUserData };
-
-
+    return { updateUserVM, getSessionVM };
 }
