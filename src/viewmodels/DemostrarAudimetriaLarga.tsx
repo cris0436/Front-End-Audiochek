@@ -28,17 +28,17 @@ const DemostrarAudimetriaLarga = () => {
         }
 
         // Procesamos los datos para crear las dos líneas de la gráfica (derecho e izquierdo)
-        const frecuencias = datosGuardados[1];
+        const frecuencias = datosGuardados[2];
         let chartData: { x: string; derecho: number; izquierdo: number }[] = [];
 
         for (let i = 0; i < frecuencias.length; i++) {
           const dbIzquierda = datosGuardados[0][i];
-          const dbDerecha = datosGuardados[2][i];
+          const dbDerecha = datosGuardados[1][i];
           chartData.push({ x: String(frecuencias[i]), derecho: dbDerecha, izquierdo: dbIzquierda });
         }
 
         setData(chartData);
-        setEstadoAuditivo(datosGuardados[4] || 0); // Actualiza el estado auditivo
+        setEstadoAuditivo(datosGuardados[3] || 0); // Actualiza el estado auditivo
       } catch (error) {
         console.error("Error obteniendo los datos de audiometría:", error);
         setSinDatos(true);

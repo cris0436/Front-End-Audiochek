@@ -1,15 +1,15 @@
-import AudimeetryResults from "./AudiometryResults" // Clase Audimetria (modificada)
+import AudimeetryResults from "./AudiometryResults"; // Clase Audiometría
+
 class Audimetria {
-    private AudiometyResults: AudimeetryResults[] = []; // Cambiado a string[] para almacenar resultados de audiometría como cadenas
-    
+    private audiometryResults: Set<AudimeetryResults> = new Set(); // Set para evitar duplicados
+
     public addAudiometryResult(audiometryResult: AudimeetryResults): void {
-      this.AudiometyResults.push(audiometryResult);
-    }
-    
-    public getAudiometryResults(): AudimeetryResults[] {
-      return this.AudiometyResults;
+        this.audiometryResults.add(audiometryResult); // Agregar sin permitir duplicados
     }
 
-    
-  }
-export default Audimetria  
+    public getAudiometryResults(): AudimeetryResults[] {
+        return Array.from(this.audiometryResults); // Convertir Set a Array si necesitas iterarlo
+    }
+}
+
+export default Audimetria;

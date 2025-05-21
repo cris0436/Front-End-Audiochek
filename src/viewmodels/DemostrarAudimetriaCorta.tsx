@@ -24,18 +24,18 @@ const  DemostrarAudimetriaCorta = () => {
         setSinDatos(true);  // Si no hay datos, actualizamos el estado para mostrar el mensaje
       } else {
         // Procesamos los datos para obtener los promedios de decibelios por frecuencia
-        const frecuencias = datosGuardados[1]
+        const frecuencias = datosGuardados[2]
         const chartData: { x: string; y: number }[] = [];
         for (let i=0;i<frecuencias.length; i++){
           const dbIzquierda = datosGuardados[0][i];
-          const dbDerecha = datosGuardados[2][i];
+          const dbDerecha = datosGuardados[1][i];
           const promedio = (dbIzquierda + dbDerecha) / 2;
           chartData.push({ x: frecuencias[i], y: promedio });
         }
         
 
         setData(chartData);
-        setEstadoAuditivo(datosGuardados[4] || 0);
+        setEstadoAuditivo(datosGuardados[3] || 0);
       }
     };
     fetchData();
