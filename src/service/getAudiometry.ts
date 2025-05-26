@@ -14,7 +14,7 @@ export function GetAudiometry() {
                 navigate("/");
                 return null;
             }
-
+            
             const response = await fetch(`${apiUrl}/audiometries/`, {
                 method: "GET",
                 headers: {
@@ -22,7 +22,7 @@ export function GetAudiometry() {
                     "Content-Type": "application/json",
                 },
             });
-
+            console.log(response)
             if (!response.ok) {
                 throw new Error("Error fetching audiometry data");
             }

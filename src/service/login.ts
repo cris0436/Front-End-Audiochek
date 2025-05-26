@@ -7,7 +7,7 @@ export async function login(username: string, password: string): Promise<any> {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
       console.log("API URL:", apiUrl);
-      const response = await fetch(`${apiUrl}/users/auth/`, {
+      const response = await fetch(`${apiUrl}/users/auth`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 

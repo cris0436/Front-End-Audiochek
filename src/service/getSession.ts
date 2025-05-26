@@ -14,7 +14,7 @@ export function useSession() {
         return null;
       }
 
-      const response = await fetch(`${apiUrl}/users/get-session/`, {
+      const response = await fetch(`${apiUrl}/users/get-session`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token.replace(/"/g, '')}`, // Eliminamos comillas extra

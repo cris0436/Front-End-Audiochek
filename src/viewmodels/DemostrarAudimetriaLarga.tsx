@@ -13,7 +13,8 @@ import {
 
 const DemostrarAudimetriaLarga = () => {
   const [data, setData] = useState<{ x: string; derecho: number; izquierdo: number }[]>([]);
-  const [estadoAuditivo, setEstadoAuditivo] = useState(0);
+  const [estadoAuditivo_left, setEstadoAuditivo_left] = useState(0);
+  const [estadoAuditivo_right, setEstadoAuditivo_right] = useState(0);
   const [sinDatos, setSinDatos] = useState(false);
   const { getAudiometryData } = GetAudiometry();
 
@@ -27,7 +28,6 @@ const DemostrarAudimetriaLarga = () => {
           return;
         }
 
-        // Procesamos los datos para crear las dos líneas de la gráfica (derecho e izquierdo)
         const frecuencias = datosGuardados[2];
         let chartData: { x: string; derecho: number; izquierdo: number }[] = [];
 
@@ -38,14 +38,15 @@ const DemostrarAudimetriaLarga = () => {
         }
 
         setData(chartData);
-        setEstadoAuditivo(datosGuardados[3] || 0); // Actualiza el estado auditivo
+        setEstadoAuditivo_left(datosGuardados[4][0] || 0);
+        setEstadoAuditivo_right(datosGuardados[4][1] || 0);
       } catch (error) {
         console.error("Error obteniendo los datos de audiometría:", error);
         setSinDatos(true);
       }
     };
 
-    fetchData(); // Llamamos a la función dentro de useEffect
+    fetchData();
   }, []);
 
   return (
@@ -56,6 +57,12 @@ const DemostrarAudimetriaLarga = () => {
             🎧 Resultados Audimetría (Oído derecho e izquierdo)
           </h2>
 
+          {/* Texto explicativo */}
+          <p className="text-center text-muted">
+            Esta gráfica representa las frecuencias sonoras que lograste percibir con cada oído, junto con los niveles de volumen en decibelios.
+            Esta información permite evaluar si tu capacidad auditiva se encuentra dentro de los parámetros esperados según tu edad.
+          </p>
+
           {sinDatos ? (
             <div className="text-center">
               <p>🚫 Sin datos de audimetría.</p>
@@ -65,8 +72,13 @@ const DemostrarAudimetriaLarga = () => {
               <ResponsiveContainer>
                 <LineChart data={data}>
                   <CartesianGrid strokeDasharray="4 4" stroke="#e0e0e0" />
-                  <XAxis dataKey="x" />
-                  <YAxis />
+                  <XAxis
+                    dataKey="x"
+                    label={{ value: "Frecuencia (Hz)", position: "insideBottom", offset: -5 }}
+                  />
+                  <YAxis
+                    label={{ value: "Decibelios (dB)", angle: -90, position: "insideLeft" }}
+                  />
                   <Tooltip />
                   <Legend />
                   <Line
@@ -90,12 +102,18 @@ const DemostrarAudimetriaLarga = () => {
             </div>
           )}
 
+          {/* Estado auditivo derecho */}
           <div className="mt-5 d-flex justify-content-center">
             <div className="bg-white border border-primary rounded-4 p-4 shadow text-center w-100" style={{ maxWidth: "300px" }}>
-              <p className="mb-1 text-muted">Estado auditivo</p>
-              <h3 className="fw-bold text-primary mb-0">{estadoAuditivo}</h3>
+              <p className="mb-1 text-muted">Estado auditivo derecha</p>
+              <h3 className="fw-bold text-primary mb-0">{estadoAuditivo_right.toFixed(2)}%</h3>
+            </div>
+            <div className="bg-white border border-primary rounded-4 p-4 shadow text-center w-100" style={{ maxWidth: "300px" }}>
+              <p className="mb-1 text-muted">Estado auditivo izquierda</p>
+              <h3 className="fw-bold text-primary mb-0">{estadoAuditivo_left.toFixed(2)}%</h3>
             </div>
           </div>
+
         </div>
       </div>
     </div>
