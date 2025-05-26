@@ -63,6 +63,7 @@ const DemostrarAudimetriaCorta = () => {
               <p>🚫 Sin datos de audimetría.</p>
             </div>
           ) : (
+            <>
             <div style={{ width: "100%", height: 300 }}>
               <ResponsiveContainer>
                 <LineChart data={data}>
@@ -80,8 +81,7 @@ const DemostrarAudimetriaCorta = () => {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          )}
-
+          
           {/* Estado auditivo en porcentaje */}
           <div className="mt-5 d-flex justify-content-center">
             <div
@@ -94,6 +94,8 @@ const DemostrarAudimetriaCorta = () => {
               </h3>
             </div>
           </div>
+          </>)}
+
         </div>
       </div>
     </div>
